@@ -31,9 +31,9 @@ Output "OTUdf_cr_excel.txt" requires user to open file in excel to delete first 
 
 Zenodo Binder, doi: LINK_TO_BINDER
 
-Github Binder: LINK_TO_BINDER
+Github Binder: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/anigwe/ord_abund_raretaxa.git/master?urlpath=rstudio)
 
-Github Repository: https://github.com/speeding-up-science-workshops/<REPO_NAME>
+Github Repository: https://github.com/speeding-up-science-workshops/ord_abund_raretaxa
 
 
 
