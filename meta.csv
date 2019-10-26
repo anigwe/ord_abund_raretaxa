@@ -1,0 +1,140 @@
+SampleID,Depth,Size_fraction,Province
+TARA_018_DCM_0.22-1.6,DCM,0.22-1.6,Mediterranean
+TARA_018_SRF_0.22-1.6,SRF,0.22-1.6,Mediterranean
+TARA_023_DCM_0.22-1.6,DCM,0.22-1.6,Mediterranean
+TARA_023_SRF_0.22-1.6,SRF,0.22-1.6,Mediterranean
+TARA_025_DCM_0.22-1.6,DCM,0.22-1.6,Mediterranean
+TARA_025_SRF_0.22-1.6,SRF,0.22-1.6,Mediterranean
+TARA_030_DCM_0.22-1.6,DCM,0.22-1.6,Mediterranean
+TARA_030_SRF_0.22-1.6,SRF,0.22-1.6,Mediterranean
+TARA_031_SRF_0.22-1.6,SRF,0.22-1.6,Red Sea
+TARA_032_DCM_0.22-1.6,DCM,0.22-1.6,Red Sea
+TARA_032_SRF_0.22-1.6,SRF,0.22-1.6,Red Sea
+TARA_033_SRF_0.22-1.6,SRF,0.22-1.6,Red Sea
+TARA_034_DCM_0.22-1.6,DCM,0.22-1.6,Red Sea
+TARA_034_SRF_0.22-1.6,SRF,0.22-1.6,Red Sea
+TARA_036_DCM_0.22-1.6,DCM,0.22-1.6,Arabian Sea
+TARA_036_SRF_0.22-1.6,SRF,0.22-1.6,Arabian Sea
+TARA_037_MES_0.22-1.6,MES,0.22-1.6,Arabian Sea
+TARA_038_DCM_0.22-1.6,DCM,0.22-1.6,Arabian Sea
+TARA_038_MES_0.22-1.6,MES,0.22-1.6,Arabian Sea
+TARA_038_SRF_0.22-1.6,SRF,0.22-1.6,Arabian Sea
+TARA_039_DCM_0.22-1.6,DCM,0.22-1.6,Arabian Sea
+TARA_039_MES_0.22-1.6,MES,0.22-1.6,Arabian Sea
+TARA_041_DCM_0.22-1.6,DCM,0.22-1.6,Arabian Sea
+TARA_041_SRF_0.22-1.6,SRF,0.22-1.6,Arabian Sea
+TARA_042_DCM_0.22-1.6,DCM,0.22-1.6,Indian Ocean
+TARA_042_SRF_0.22-1.6,SRF,0.22-1.6,Indian Ocean
+TARA_045_SRF_0.22-1.6,SRF,0.22-1.6,Indian Ocean
+TARA_048_SRF_0.22-1.6,SRF,0.22-1.6,Unknown
+TARA_004_DCM_0.22-1.6,DCM,0.22-1.6,North Atlantic
+TARA_004_SRF_0.22-1.6,SRF,0.22-1.6,North Atlantic
+TARA_052_DCM_0.22-1.6,DCM,0.22-1.6,Unknown
+TARA_052_SRF_0.22-1.6,SRF,0.22-1.6,Unknown
+TARA_007_DCM_0.22-1.6,DCM,0.22-1.6,Mediterranean
+TARA_007_SRF_0.22-1.6,SRF,0.22-1.6,Mediterranean
+TARA_009_DCM_0.22-1.6,DCM,0.22-1.6,Mediterranean
+TARA_009_SRF_0.22-1.6,SRF,0.22-1.6,Mediterranean
+TARA_100_DCM_0.22-3,DCM,0.22-3,South Pacific
+TARA_100_MES_0.22-3,MES,0.22-3,South Pacific
+TARA_100_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_102_DCM_0.22-3,DCM,0.22-3,Chile Peru Current
+TARA_102_MES_0.22-3,MES,0.22-3,Chile Peru Current
+TARA_102_SRF_0.22-3,SRF,0.22-3,Chile Peru Current
+TARA_109_DCM_0.22-3,DCM,0.22-3,Chile Peru Current
+TARA_109_MES_0.22-3,MES,0.22-3,Chile Peru Current
+TARA_109_SRF_0.22-3,SRF,0.22-3,Chile Peru Current
+TARA_110_DCM_0.22-3,DCM,0.22-3,South Pacific
+TARA_110_MES_0.22-3,MES,0.22-3,South Pacific
+TARA_110_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_111_DCM_0.22-3,DCM,0.22-3,South Pacific
+TARA_111_MES_0.22-3,MES,0.22-3,South Pacific
+TARA_111_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_112_DCM_0.22-3,DCM,0.22-3,South Pacific
+TARA_112_MES_0.22-3,MES,0.22-3,South Pacific
+TARA_112_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_122_DCM_0.22-3,DCM,0.22-3,South Pacific
+TARA_122_MES_0.22-3,MES,0.22-3,South Pacific
+TARA_122_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_123_MIX_0.22-3,MIX,0.22-3,South Pacific
+TARA_123_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_124_MIX_0.22-3,MIX,0.22-3,South Pacific
+TARA_124_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_125_MIX_0.22-3,MIX,0.22-3,South Pacific
+TARA_125_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_128_DCM_0.22-3,DCM,0.22-3,South Pacific
+TARA_128_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_132_DCM_0.22-3,DCM,0.22-3,Unknown
+TARA_132_MES_0.22-3,MES,0.22-3,Unknown
+TARA_132_SRF_0.22-3,SRF,0.22-3,Unknown
+TARA_133_DCM_0.22-3,DCM,0.22-3,North Pacific
+TARA_133_MES_0.22-3,MES,0.22-3,North Pacific
+TARA_133_SRF_0.22-3,SRF,0.22-3,North Pacific
+TARA_137_DCM_0.22-3,DCM,0.22-3,North Pacific
+TARA_137_MES_0.22-3,MES,0.22-3,North Pacific
+TARA_137_SRF_0.22-3,SRF,0.22-3,North Pacific
+TARA_138_DCM_0.22-3,DCM,0.22-3,North Pacific
+TARA_138_MES_0.22-3,MES,0.22-3,North Pacific
+TARA_138_SRF_0.22-3,SRF,0.22-3,North Pacific
+TARA_140_SRF_0.22-3,SRF,0.22-3,North Pacific
+TARA_141_SRF_0.22-3,SRF,0.22-3,North Atlantic
+TARA_142_DCM_0.22-3,DCM,0.22-3,North Atlantic
+TARA_142_MES_0.22-3,MES,0.22-3,North Atlantic
+TARA_142_SRF_0.22-3,SRF,0.22-3,North Atlantic
+TARA_145_MES_0.22-3,MES,0.22-3,North Atlantic
+TARA_145_SRF_0.22-3,SRF,0.22-3,North Atlantic
+TARA_146_MES_0.22-3,MES,0.22-3,North Atlantic
+TARA_146_SRF_0.22-3,SRF,0.22-3,North Atlantic
+TARA_148b_MES_0.22-3,MES,0.22-3,Unknown
+TARA_148_SRF_0.22-3,SRF,0.22-3,North Atlantic
+TARA_149_MES_0.22-3,MES,0.22-3,North Atlantic
+TARA_149_SRF_0.22-3,SRF,0.22-3,North Atlantic
+TARA_150_DCM_0.22-3,DCM,0.22-3,North Atlantic
+TARA_150_SRF_0.22-3,SRF,0.22-3,North Atlantic
+TARA_151_DCM_0.22-3,DCM,0.22-3,North Atlantic
+TARA_151_SRF_0.22-3,SRF,0.22-3,North Atlantic
+TARA_152_MIX_0.22-3,MIX,0.22-3,North Atlantic
+TARA_152_MES_0.22-3,MES,0.22-3,North Atlantic
+TARA_152_SRF_0.22-3,SRF,0.22-3,North Atlantic
+TARA_056_MES_0.22-3,MES,0.22-3,East African Current
+TARA_056_SRF_0.22-3,SRF,0.22-3,East African Current
+TARA_057_SRF_0.22-3,SRF,0.22-3,East African Current
+TARA_058_DCM_0.22-3,DCM,0.22-3,East African Current
+TARA_062_SRF_0.22-3,SRF,0.22-3,East African Current
+TARA_064_DCM_0.22-3,DCM,0.22-3,East African Current
+TARA_064_MES_0.22-3,MES,0.22-3,East African Current
+TARA_064_SRF_0.22-3,SRF,0.22-3,East African Current
+TARA_065_DCM_0.22-3,DCM,0.22-3,East African Current
+TARA_065_MES_0.22-3,MES,0.22-3,East African Current
+TARA_065_SRF_0.22-3,SRF,0.22-3,East African Current
+TARA_066_DCM_0.22-3,DCM,0.22-3,South Atlantic
+TARA_066_SRF_0.22-3,SRF,0.22-3,South Atlantic
+TARA_067_SRF_0.22-3,SRF,0.22-3,South Atlantic
+TARA_068_DCM_0.22-3,DCM,0.22-3,South Atlantic
+TARA_068_MES_0.22-3,MES,0.22-3,South Atlantic
+TARA_068_SRF_0.22-3,SRF,0.22-3,South Atlantic
+TARA_070_MES_0.22-3,MES,0.22-3,South Atlantic
+TARA_070_SRF_0.22-3,SRF,0.22-3,South Atlantic
+TARA_072_DCM_0.22-3,DCM,0.22-3,South Atlantic
+TARA_072_MES_0.22-3,MES,0.22-3,South Atlantic
+TARA_072_SRF_0.22-3,SRF,0.22-3,South Atlantic
+TARA_076_DCM_0.22-3,DCM,0.22-3,South Atlantic
+TARA_076_MES_0.22-3,MES,0.22-3,South Atlantic
+TARA_076_SRF_0.22-3,SRF,0.22-3,South Atlantic
+TARA_078_DCM_0.22-3,DCM,0.22-3,South Atlantic
+TARA_078_MES_0.22-3,MES,0.22-3,South Atlantic
+TARA_078_SRF_0.22-3,SRF,0.22-3,South Atlantic
+TARA_082_DCM_0.22-3,DCM,0.22-3,South Atlantic
+TARA_082_SRF_0.22-3,SRF,0.22-3,South Atlantic
+TARA_084_SRF_0.22-3,SRF,0.22-3,Unknown
+TARA_085_DCM_0.22-3,DCM,0.22-3,Unknown
+TARA_085_MES_0.22-3,MES,0.22-3,Unknown
+TARA_085_SRF_0.22-3,SRF,0.22-3,Unknown
+TARA_093_DCM_0.22-3,DCM,0.22-3,Chile Peru Current
+TARA_093_SRF_0.22-3,SRF,0.22-3,Chile Peru Current
+TARA_094_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_096_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_098_DCM_0.22-3,DCM,0.22-3,South Pacific
+TARA_098_MES_0.22-3,MES,0.22-3,South Pacific
+TARA_098_SRF_0.22-3,SRF,0.22-3,South Pacific
+TARA_099_SRF_0.22-3,SRF,0.22-3,South Pacific

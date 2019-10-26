@@ -1,0 +1,295 @@
+---
+title: "CRT_taraoceans"
+author: "Alexandria igwe"
+date: "10/26/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#load data
+```{r, include=FALSE}
+#loading data for phyloseq object
+#names with dashes (-) are turned into periods when used as row names. use check.names=FALSE to stop that.
+dataset="Tara_Oceans"
+otu<-read.csv("otu.csv",row.names=1,check.names=FALSE)  
+meta<-read.csv("meta.csv", sep=",", header=T)
+rownames(meta)<-meta$SampleID
+tax<- read.csv("taxa.csv", sep=",", header=T, row.names=1)
+
+#this can be used to check if vectors are identical
+#identical(colnames(otu),rownames(meta))
+#determines what differences may be
+#a<-colnames(otu)
+#b<-rownames(meta)
+#a[!(a %in% b)]
+```
+#load libraries
+```{r}
+#library(knitr)
+library(phyloseq)
+library(dplyr)
+library(ggplot2)
+library(viridis) #for ggplot2 colors
+library(vegan)
+library(TSA)
+library(ggpubr)
+```
+#data processing
+##create phyloseq
+```{r}
+OTU = otu_table(otu, taxa_are_rows=TRUE)
+TAX = tax_table(as.matrix(tax))
+META <- sample_data(meta)
+ps = phyloseq(OTU,TAX,META)
+ps
+```
+##check column names
+```{r}
+colnames(tax_table(ps))
+#colnames(tax_table(ps)) <- c("Domain" "Phylum" "Class"  "Order"  "Family" "Genus") #can be used to change names if column names are not correct
+```
+##remove mitochondria and chloroplast
+```{r}
+#remove non-target otus
+ps.bact <- ps %>%
+  subset_taxa(
+    Domain == "Bacteria" &
+    Family  != "Mitochondria" &
+    Class   != "Chloroplast"
+  )
+ps.bact
+```
+#all taxa ordination visual and stats
+##ordination visualization
+```{r}
+#ordination for plot_ordination in phyloseq
+nmds.bray.ps.bact <- ordinate(ps.bact, method="NMDS", distance="bray")
+nmds.bray.ps.bact
+
+#visualization of relationship
+nmds.bray.ps.bact.plot <- plot_ordination(ps.bact, nmds.bray.ps.bact, color="Depth") + scale_color_viridis(discrete=TRUE) +
+  theme_bw() + theme(text = element_text(size=20)) + geom_point(size=5) +
+  theme(legend.text = element_text(size = 20)) +
+  labs(title="Bray NMDS")
+nmds.bray.ps.bact.plot
+#ggsave("/Users/anigwe/Desktop/tara_github/bray_nmds_all.png", height=280, width=336, units='mm', dpi=150)
+```
+##ordination stats
+```{r}
+#stats
+bray.ps.bact <- phyloseq::distance(ps.bact, method="bray")
+bray.ps.bact
+sampledf.ps.bact <- data.frame(sample_data(ps.bact))
+adonis.ps.bact <- adonis(bray.ps.bact ~ Depth*Province*Size_fraction, data = sampledf.ps.bact)
+adonis.ps.bact
+```
+##test for homogeneity of variance
+```{r}
+#homogeneity of variance is an assumption of PERMANOVA (adonis) stating that all comparison groups have the same variance. read more about it here: www.statisticssolutions.com/the-assumption-of-homogeneity-of-variance/
+
+beta.ps.bact <- betadisper(bray.ps.bact, sampledf.ps.bact$Depth, type="centroid")
+permutest(beta.ps.bact)
+plot(beta.ps.bact)
+TukeyHSD(beta.ps.bact)
+```
+#conditionally rare taxa (CRT) identification, relative abundance (no stats), ordination visual and stats
+##extracting otu table from phyloseq
+```{r}
+#if conducntion time series, column names should be date. run each treatment separately.
+#https://astrostatistics.psu.edu/su07/R/html/base/html/Extract.data.frame.html
+OTUdf <- as.data.frame(otu_table(ps.bact)) #if taxa_are_rows=FALSE, use as.data.frame(t(OTU))
+class(OTUdf) #if not a data frame, try as.data.frame(as.matrix(OTU))
+write.table(OTUdf, "OTUdf.txt",col.names = NA, sep = "\t")
+test <- read.table("OTUdf.txt")
+```
+##formatting otu table for use in CRT function
+```{r}
+a<-nrow(test)
+b<-(a-1)
+test[2:a,]$V1 <- as.numeric(row.names(test[1:b,]))
+test$V1<-as.numeric(as.character(test$V1))
+test[2:a,]$V1 <- as.numeric(row.names(test[1:b,]))
+str(test$V1) #num [1:34077] NA 1 2 3 4 5 6 7 8 9 ...
+
+#open in excel. delete row 1. delete column A. delete content (NA) of first cell (row 1, col 1). save as OTUdf_cr_input.txt
+write.table(test, "OTUdf_cr_excel.txt", sep = "\t")
+```
+##SimpletoRare
+```{r}
+#This is an analysis script for detecting conditionally rare taxa in a temporal microbial community dataset.  
+#Written by A. Shade 30 May 2013/02 Dec 2013, to accompany the manuscript: "Conditionally rare taxa disproportionately contribute to temporal changes in microbial diversity."  
+#This script comes with no warranty.
+#Questions?  shade.ashley@gmail.com
+
+#####
+#16 Oct 2014 bug fix.  ALS.  MaxRel filter was updated.  Also added option:  can discover of CRT based on MaxRel calculated from dataset with all OTUs OR dataset with only non-singleton OTUs.
+####
+
+#####
+#What does the script do?
+#This script will print the proportion of conditionally rare taxa detected in the dataset in the R console.  It will also output a file of the OTU IDs, and, if provided, the taxonomic assignments of those OTUs, for the conditionally rare taxa.
+
+#The script allows the user to define thresholds of the coefficient of bimodality (b_thresh, default = 0.90), and the relative abundance maximum (abund_thresh, default = 0.005). 
+
+
+#####
+#What are the input files?
+#The input file for this script is: An OTU (taxa) table, with samples in columns and taxa in rows.  The first row should include column names.  The first column should have taxa (OTU) IDs.  The first cell (row 1, col 1) should be empty.  It is optional that the last column contains taxonomic assignments of each OTU.
+ 
+#The L4 English Channel dataset is provided as an example of an input file.  Inspect the formatting of this file carefully and use it as a guide to prepare your own dataset for analysis.
+
+ 
+#####
+#How do I use the script? 
+#Step 1.
+#If they are not installed already, install the following required R packages: vegan, TSA.  Then, load the libraries to the R workspace by copying and pasting the commands below into the R console:
+library(vegan)
+library(TSA)
+
+#Step 2.
+#Place the input file and script in the same working directory to run this script.  Change the working directory in R to match where the files have been placed.
+
+#Step 3.
+#Load the necessary functions into your R workspace, contained in a separate file, "CRT_functions.R" 
+source("CRT_Functions_v1.1.R")
+
+#Step 4.  
+#Change the options below to match your dataset.  The options are:  
+#otu_fp - type the the full name of your dataset file, including the extension
+#abund_thresh -  Change the maximum abundance threshold, if desired. Defaults to 0.005
+#abund_thresh_ALL - Use TRUE if you want to use the full dataset (ALL OTUs) to calculate relative abundances.  Use FALSE if you want to use the non-singleton (filtered) dataset to calculate relative abundances.  Default is FALSE.
+#b_thresh - Change the coefficient of bimodality threshold, if desired.  Defaults to 0.90
+#rdp_lastcol - Use TRUE if the last column of the dataset contains the taxonomic assignments of OTUs, use FALSE if not
+#Then,to run the script, copy and paste the command into the R console:
+
+
+cr.df<-SimpleRareToPrev.f(otu_fp="OTUdf_cr_input.txt",abund_thresh=0.005, abund_thresh_ALL=FALSE,b_thresh=0.90, rdp_lastcol=FALSE)
+
+#When the script is finished running, a new results file will appear in the directory, and the output will also appear in the R console.
+
+#Important note:  This script will write over previous results files in the same directory with the same name
+
+#Have fun!
+```
+##create data frame with relative abundance values
+```{r}
+otu.cr<-read.table("OTUdf_cr_input.txt")
+tmp=otu.cr[rowSums(otu.cr)>0,]
+no.otus=nrow(tmp)
+otu.nosigs=tmp[rowSums(tmp)>1,]
+
+rel.abund.cr <- data.frame("dataset" = dataset,
+                            "rareOTU" = nrow(cr.df),
+                             "totalOTU" = nrow(tmp),
+                             "rareOTU_totalOTU_prop" = nrow(cr.df)/nrow(tmp),
+                             "nonsingleOTU" = nrow(otu.nosigs),
+                             "rare_nonsingleOTU_prop" =
+                            nrow(cr.df)/nrow(otu.nosigs))
+rel.abund.cr
+```
+##creat data frame of CRT function output
+```{r}
+#dataframe of CRT output. also saved as "ResultsFile_ConditionallyRareOTUID_0.005_0.9_NOSIG.txt" in your directory
+taxalist<-as.data.frame(tax_table(ps.bact))
+taxalist$seqnames<-row.names(taxalist)
+taxalist$OTUID <- 1:nrow(taxalist)
+cr.df.taxa <- merge(cr.df, taxalist, by.x = "OTUID")
+cr.df.taxa
+```
+##create data frame of CRT taxa
+```{r}
+seqnames <- cr.df.taxa$seqnames
+seqnames
+r <- rownames(tax_table(ps.bact)) %in% seqnames
+crt.list<-as.data.frame(tax_table(ps.bact)[r, ])
+crt.list
+```
+##create phyloseq of CRT
+```{r}
+s.logical<-taxa_names(ps.bact) %in% seqnames
+CRT.phyloseq<-subset_taxa(ps.bact,s.logical)
+CRT.phyloseq
+```
+##relative abundance of CRT
+```{r}
+CRT.phyloseq_phylum <- CRT.phyloseq %>%
+  tax_glom(taxrank = "Phylum") %>% 
+  transform_sample_counts(function(x) {x/sum(x)} ) %>%
+  psmelt() %>%                                         
+  filter(Abundance > 0.02) %>%                        
+  arrange(Phylum) 
+
+dim(CRT.phyloseq_phylum)
+```
+```{r}
+CRT.phyloseq_phylum_bar<-ggplot(CRT.phyloseq_phylum, aes(x = Province, y = Abundance, fill = Phylum)) +
+  theme_bw() +
+  scale_fill_viridis(discrete=TRUE) +
+  #scale_fill_hue(l=40, c=35) +
+  facet_grid(~Depth) +
+  geom_bar(stat="identity", position = "fill") +
+  scale_y_continuous(labels = scales::percent) +
+  theme(text = element_text(size=16), axis.title.x=element_blank(), axis.text.x = element_text(angle=45, hjust=1)) +
+  ylab ("Relateve Abundance of CRT (Phyla > 2%)") +
+  theme(axis.text.x = element_text(face = "italic"))
+CRT.phyloseq_phylum_bar
+#ggsave("/Users/anigwe/Desktop/tara_github/relabund_crt.png", height=280, width=336, units='mm', dpi=150)
+```
+##ordination visualization - crt
+```{r}
+#ordination for plot_ordination in phyloseq
+nmds.bray.CRT.phyloseq <- ordinate(CRT.phyloseq, method="NMDS", distance="bray")
+nmds.bray.CRT.phyloseq
+
+#visualization of relationship
+nmds.bray.CRT.phyloseq.plot <- plot_ordination(CRT.phyloseq, nmds.bray.CRT.phyloseq, color="Depth") + scale_color_viridis(discrete=TRUE) +
+  theme_bw() + theme(text = element_text(size=20)) + geom_point(size=5) +
+  theme(legend.text = element_text(size = 20)) +
+  labs(title="Bray NMDS - CRT")
+nmds.bray.CRT.phyloseq.plot
+
+#to save figure
+#ggsave("/Users/anigwe/Desktop/tara_github/bray_nmds_crt.png", height=280, width=336, units='mm', dpi=150)
+```
+##ordination stats - crt
+```{r}
+#stats
+bray.CRT.phyloseq <- phyloseq::distance(CRT.phyloseq, method="bray")
+bray.CRT.phyloseq
+sampledf.CRT.phyloseq <- data.frame(sample_data(CRT.phyloseq))
+adonis.CRT.phyloseq <- adonis(bray.CRT.phyloseq ~ Depth*Province*Size_fraction, data = sampledf.CRT.phyloseq)
+adonis.CRT.phyloseq
+```
+##test for homogeneity of variance - crt
+```{r}
+#homogeneity of variance is an assumption of PERMANOVA (adonis) stating that all comparison groups have the same variance. read more about it here: www.statisticssolutions.com/the-assumption-of-homogeneity-of-variance/
+beta.CRT.phyloseq <- betadisper(bray.CRT.phyloseq, sampledf.CRT.phyloseq$Depth, type="centroid")
+permutest(beta.CRT.phyloseq)
+plot(beta.CRT.phyloseq)
+TukeyHSD(beta.CRT.phyloseq)
+```
+#side-by-side ordination visualization
+```{r}
+#all
+nmds.bray.ps.bact.plot2 <- plot_ordination(ps.bact, nmds.bray.ps.bact, color="Depth") + scale_color_viridis(discrete=TRUE) +
+  theme_bw() + theme(text = element_text(size=20)) + geom_point(size=5) +
+  theme(legend.text = element_text(size = 20)) +
+  labs(title="Bray NMDS")
+nmds.bray.ps.bact.plot2
+
+#crt
+nmds.bray.CRT.phyloseq.plot2 <- plot_ordination(CRT.phyloseq, nmds.bray.CRT.phyloseq, color="Depth") + scale_color_viridis(discrete=TRUE) +
+  theme_bw() + theme(text = element_text(size=20)) + geom_point(size=5) +
+  theme(legend.text = element_text(size = 20), axis.title.y = element_blank()) +
+  labs(title="Bray NMDS - CRT")
+nmds.bray.CRT.phyloseq.plot2
+
+#ggarrange
+ggarrange(nmds.bray.ps.bact.plot2,nmds.bray.CRT.phyloseq.plot2, common.legend=TRUE, legend="bottom")
+
+#to save figure
+#ggsave("/Users/anigwe/Desktop/tara_github/bray_nmds_all_crt.png", height=280, width=336, units='mm', dpi=150)
+```
+
