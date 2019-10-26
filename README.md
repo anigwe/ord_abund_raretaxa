@@ -1,4 +1,4 @@
-#Relative Abundance and Community Similiarity of Conditionally Rare Taxa
+Relative Abundance and Community Similiarity of Conditionally Rare Taxa
 ====
 
 ## Quick Start
