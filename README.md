@@ -4,7 +4,7 @@ Relative Abundance and Community Similiarity of Conditionally Rare Taxa
 ## Quick Start
 - Open crt_taraoceans.Rmd
 - Click "knit"
-- crt.Rds contains the output from the CRT function and can be loaded in case of time or memory constraints.
+- crt.rds contains the output from the CRT function and can be loaded in case of time or memory constraints.
 
 ## Example Output
 ![](bray_nmds_all_crt.png)
