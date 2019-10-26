@@ -11,7 +11,7 @@ Relative Abundance and Community Similiarity of Conditionally Rare Taxa
 
 ## Summary
 ### What is the visualization?
-- WThis is an non-metric multidimensional scaling (NMDS) plot used to visualize the relationship between communities based on a chosen distance metric (i.e., Bray-Curtis, Unifrac, etc.).
+- This is an non-metric multidimensional scaling (NMDS) plot used to visualize the relationship between communities based on a chosen distance metric (i.e., Bray-Curtis, Unifrac, etc.).
 - DCM = Deep Chlorophyll Maximum Layer; MES = Mesopelagic Zone; MIX = Marine Epipelagic Mixed Layer; SRF = Surface Water Layer
 
 ### What data goes in (and what preprocessing is necessary)?
