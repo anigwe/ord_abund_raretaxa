@@ -4,13 +4,15 @@ Relative Abundance and Community Similiarity of Conditionally Rare Taxa
 ## Quick Start
 - Open crt_taraoceans.Rmd
 - Click "knit"
+- crt.Rds contains the output from the CRT function and can be loaded in case of time or memory constraints.
 
 ## Example Output
 ![](bray_nmds_all_crt.png)
 
 ## Summary
 ### What is the visualization?
-- Workflow using phyloseq and CRT function to identify, calculate, and visualize relative abundances and ordination of conditionally rare taxa. (DCM = Deep Chlorophyll Maximum Layer; MES = Mesopelagic Zone; MIX = Marine Epipelagic Mixed Layer; SRF = Surface Water Layer) 
+- WThis is an non-metric multidimensional scaling (NMDS) plot used to visualize the relationship between communities based on a chosen distance metric (i.e., Bray-Curtis, Unifrac, etc.).
+- DCM = Deep Chlorophyll Maximum Layer; MES = Mesopelagic Zone; MIX = Marine Epipelagic Mixed Layer; SRF = Surface Water Layer
 
 ### What data goes in (and what preprocessing is necessary)?
 - Visualization requires otu table, taxonomy table, and metadata for creating a phyloseq object.
