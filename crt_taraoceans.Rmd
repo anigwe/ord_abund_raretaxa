@@ -27,7 +27,13 @@ tax<- read.csv("taxa.csv", sep=",", header=T, row.names=1)
 ```
 #load libraries
 ```{r}
-#library(knitr)
+#install phyloseq package
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+#BiocManager::install("phyloseq")
+```
+```{r}
+library(knitr)
 library(phyloseq)
 library(dplyr)
 library(ggplot2)
@@ -74,7 +80,7 @@ nmds.bray.ps.bact.plot <- plot_ordination(ps.bact, nmds.bray.ps.bact, color="Dep
   theme(legend.text = element_text(size = 20)) +
   labs(title="Bray NMDS")
 nmds.bray.ps.bact.plot
-ggsave("/Users/anigwe/Desktop/tara_github/bray_nmds_all.png", height=280, width=336, units='mm', dpi=150)
+#ggsave("/Users/anigwe/Desktop/tara_github/bray_nmds_all.png", height=280, width=336, units='mm', dpi=150)
 ```
 ##ordination stats
 ```{r}
@@ -240,7 +246,7 @@ CRT.phyloseq_phylum_bar<-ggplot(CRT.phyloseq_phylum, aes(x = Province, y = Abund
   ylab ("Relateve Abundance of CRT (Phyla > 2%)") +
   theme(axis.text.x = element_text(face = "italic"))
 CRT.phyloseq_phylum_bar
-ggsave("/Users/anigwe/Desktop/tara_github/relabund_crt.png", height=280, width=336, units='mm', dpi=150)
+#ggsave("/Users/anigwe/Desktop/tara_github/relabund_crt.png", height=280, width=336, units='mm', dpi=150)
 ```
 ##ordination visualization - crt
 ```{r}
@@ -256,7 +262,7 @@ nmds.bray.CRT.phyloseq.plot <- plot_ordination(CRT.phyloseq, nmds.bray.CRT.phylo
 nmds.bray.CRT.phyloseq.plot
 
 #to save figure
-ggsave("/Users/anigwe/Desktop/tara_github/bray_nmds_crt.png", height=280, width=336, units='mm', dpi=150)
+#ggsave("/Users/anigwe/Desktop/tara_github/bray_nmds_crt.png", height=280, width=336, units='mm', dpi=150)
 ```
 ##ordination stats - crt
 ```{r}
@@ -295,7 +301,7 @@ nmds.bray.CRT.phyloseq.plot2
 ggarrange(nmds.bray.ps.bact.plot2,nmds.bray.CRT.phyloseq.plot2, common.legend=TRUE, legend="bottom")
 
 #to save figure
-ggsave("/Users/anigwe/Desktop/tara_github/bray_nmds_all_crt.png", height=280, width=336, units='mm', dpi=150)
+#ggsave("/Users/anigwe/Desktop/tara_github/bray_nmds_all_crt.png", height=280, width=336, units='mm', dpi=150)
 ```
 
 
