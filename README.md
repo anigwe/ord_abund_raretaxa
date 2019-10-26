@@ -2,7 +2,7 @@ Relative Abundance and Community Similiarity of Conditionally Rare Taxa
 ====
 
 ## Quick Start
-Open crt_taraoceans.Rmd
+### Open crt_taraoceans.Rmd
 Click "knit"
 
 ## Example Output
